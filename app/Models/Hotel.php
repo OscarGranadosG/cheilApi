@@ -45,6 +45,18 @@ class Hotel extends Model
         return DB::table('hotels')->where('id', $id)->get();
     }
 
+    public static function updateHotel( $request, $id ) {
+        return DB::table('hotels')
+            ->where('id', $id)
+            ->update([
+                'name' => $request['name'],
+                'phone' => $request['phone'],
+                'address' => $request['address'],
+                'description' => $request['description'],
+                'city_id' => $request['city_id'],
+            ]);
+    }
+
     //relacion City
     public function city()
     {

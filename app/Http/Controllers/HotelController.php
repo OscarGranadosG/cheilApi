@@ -101,7 +101,12 @@ class HotelController extends Controller
             'city_id' => 'required',
         ]);
 
-        return $request;
+        try {
+            $response = Hotel::updateHotel($request->all(), $id);
+            return response()->json(["Hotel modificado correctamente" => $id])->setStatusCode(JsonResponse::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()])->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
