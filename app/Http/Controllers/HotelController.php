@@ -41,6 +41,14 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'city_id' => 'required',
+        ]); 
+
         try {
             $response = Hotel::saveHotel($request->all());
             return response()->json(["Hotel guardado correctamente" => $response])->setStatusCode(JsonResponse::HTTP_OK);
@@ -68,7 +76,12 @@ class HotelController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $hotel = Hotel::getHotel($id)->first();
+            return response()->json(['hotel' => $hotel])->setStatusCode(JsonResponse::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $e->getMessage()])->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -80,7 +93,15 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'city_id' => 'required',
+        ]);
+
+        return $request;
     }
 
     /**

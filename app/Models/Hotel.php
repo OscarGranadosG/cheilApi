@@ -41,6 +41,10 @@ class Hotel extends Model
         return DB::table('hotels')->where('id', $id)->delete();
     }
 
+    public static function getHotel( $id ) {
+        return DB::table('hotels')->where('id', $id)->get();
+    }
+
     //relacion City
     public function city()
     {
